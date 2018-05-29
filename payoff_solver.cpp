@@ -10,7 +10,7 @@ struct Interval {
 		this->payoff = payoff;
 	}
 	string toString() {
-		return to_string(start) + "," + to_string(end) + "," + to_string(payoff);
+		return to_string(start) + " " + to_string(end) + " " + to_string(payoff);
 	}
 	int start;
 	int end;
@@ -72,7 +72,7 @@ int getLastIntervalIndex(vector<Interval>* list, int start_index, int end_index,
 
 int main () {
 	vector<Interval> interval_list;
-	vector<Interval> chosen_list;
+	vector<vector<Interval>> chosen_list;
 	vector<int> payoff_list;
 
 	storeIntervals(&interval_list);
@@ -80,27 +80,34 @@ int main () {
 
 	int n = interval_list.size();
 	payoff_list.push_back(interval_list[0].payoff);
-	chosen_list.push_back(interval_list[0]);
+
+	vector<Interval> inilist;
+	inilist.push_back(interval_list[0]);
+	chosen_list.push_back(inilist);
 
 	for (int i = 1; i < n; i++) {
 		int lastIndex = getLastIntervalIndex(&interval_list, 0, i, interval_list[i].start);
-
 		int newPayoff = interval_list[i].payoff;
+
 		if (lastIndex != -1)
 			newPayoff += payoff_list[lastIndex];
 
 		if (newPayoff > payoff_list[i - 1]) {
 			payoff_list.push_back(newPayoff);
-			chosen_list.pop_back();
-			chosen_list.push_back(interval_list[i]);
+
+			vector<Interval> newlist;
+			if (lastIndex != -1)
+				newlist = chosen_list[lastIndex];
+			newlist.push_back(interval_list[i]);
+			chosen_list.push_back(newlist);
 		}
 		else {
 			payoff_list.push_back(payoff_list[i - 1]);
-			chosen_list.push_back(interval_list[i - 1]);
+			chosen_list.push_back(chosen_list[i - 1]);
 		}
 	}
 
-	cout << payoff_list[n - 1] << endl;
-	for (int i = 0; i < chosen_list.size(); i++)
-		cout << chosen_list[i].toString() << endl;
+	cout << "Max Payoff: " << payoff_list[n - 1] << endl;
+	for (int i = 0; i < chosen_list[chosen_list.size() - 1].size(); i++)
+		cout << chosen_list[chosen_list.size() - 1][i].toString() << endl;
 }
