@@ -38,14 +38,13 @@ void sortIntervals(vector<Interval>* list) {
 	sort(list->begin(), list->end(), Comparator());
 }
 
-int getLastIntervalIndex(vector<Interval>* list, int start_index, int end_index, int start_time) {
-	for (int i = end_index - 1; i >= start_index; i--)
-		if (list->at(i).end <= start_time)
-			return i;
-	return -1;
-}
+// int getLastIntervalIndex(vector<Interval>* list, int start_index, int end_index, int start_time) {
+// 	for (int i = end_index - 1; i >= start_index; i--)
+// 		if (list->at(i).end <= start_time)
+// 			return i;
+// 	return -1;
+// }
 
-/*
 int getLastIntervalIndex(vector<Interval>* list, int start_index, int end_index, int start_time) {
 
 	if (start_index > end_index)
@@ -67,10 +66,8 @@ int getLastIntervalIndex(vector<Interval>* list, int start_index, int end_index,
 		return getLastIntervalIndex(list, start_index, middle_index - 1, start_time);
 
 }
-*/
 
-
-int main () {
+void doYourThing() {
 	vector<Interval> interval_list;
 	vector<vector<Interval>> chosen_list;
 	vector<int> payoff_list;
@@ -110,4 +107,21 @@ int main () {
 	cout << "Max Payoff: " << payoff_list[n - 1] << endl;
 	for (int i = 0; i < chosen_list[chosen_list.size() - 1].size(); i++)
 		cout << chosen_list[chosen_list.size() - 1][i].toString() << endl;
+}
+
+
+int main () {
+	doYourThing();
+	// vector<Interval> interval_list;
+	// interval_list.push_back(Interval(0, 3, 0));
+	// interval_list.push_back(Interval(2, 3, 0));
+	// interval_list.push_back(Interval(1, 3, 0));
+	// interval_list.push_back(Interval(2, 5, 0));
+	// interval_list.push_back(Interval(3, 5, 0));
+	// interval_list.push_back(Interval(3, 6, 0));
+	// interval_list.push_back(Interval(2, 7, 0));
+
+	// int i = 4;
+	// int lastIndex = getLastIntervalIndex(&interval_list, 0, i, interval_list[i].start);
+	// cout << lastIndex << endl;
 }
